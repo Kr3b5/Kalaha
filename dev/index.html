@@ -9,10 +9,10 @@
     
     <ul>
         <li><h1>Kalaha</h1></li>
-        <li style="float:right"><a>Neues Spiel</a></li>
+        <li style="float:right"><a onclick="newGame()">Neues Spiel</a></li>
     </ul>
     
-	<p class="active-player">An der Reihe: Spieler <span class="player">1</span></p>
+	<p class="active-player">An der Reihe: Spieler <span id="player">1</span></p>
 
 	<div class="board">
 
@@ -41,7 +41,6 @@
         <div class="finish p1"><p>0</p></div>
         
 	</div>
-
 
     <script src="./js/game.js"></script>
 
