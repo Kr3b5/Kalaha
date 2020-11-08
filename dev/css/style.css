@@ -86,7 +86,7 @@ body {
 	flex-flow: row;
 	width: 1000px;
 	height: 280px;
-	background-color: rgba(0, 0, 0, .05);
+	background-color: rgba(139,69,19, .05);
 	border-color: #333333;
 	border-width: 1px;
 	border-style: solid;
