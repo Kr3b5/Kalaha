@@ -166,17 +166,3 @@ function newGame(){
     //TODO update Player 
 }
 
-/*=========================================================================================
-                                        Steine 
-=========================================================================================*/
-function setStones(){
-let p = document.createElement('p');
-   p.appendChild(document.createTextNode('Hello, '));
-
-   let em = document.createElement('em');
-   em.appendChild(document.createTextNode('World'));
-   p.appendChild(em);
-
-   p.appendChild(document.createTextNode('!'));
-   document.getElementById('end').appendChild(p);
-}
