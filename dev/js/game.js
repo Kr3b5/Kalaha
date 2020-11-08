@@ -12,13 +12,105 @@
                                         GLOBAL
 =========================================================================================*/
 
-var p1_pits = [1,2,3,4,5,6];
-var p2_pits = [7,8,9,10,11,12];
+var p1_pits = [4,4,4,4,4,4];
+var p2_pits = [4,4,4,4,4,4];
 
-var p1_finish = 1;
-var p2_finish = 2;
+var p1_finish = [0];
+var p2_finish = [0];
 
 var p1_turn = true;  
+
+/*=========================================================================================
+                                        TURN
+=========================================================================================*/
+
+function makeTurn(row, nr){
+    console.log("MAKE TURN " + row + " | " + nr)
+    var id = "pit-" + row + "-" + nr;
+    var stones = document.getElementById(id).innerText
+
+    // player 1 turn 
+    if( row == 1 ){
+        p1Turn(stones, nr); 
+    }
+
+    // player 2 turn 
+    if( row == 2 ){
+        p2Turn(stones, nr);
+    }
+
+
+}
+
+function p1Turn(stones, nr){
+    console.log("P1 TURN " + stones + " | " + nr)
+    setStones( p1_pits, p1_finish, p2_pits, stones, nr);
+}
+
+function p2Turn(stones, nr){
+    console.log("P1 TURN " + stones + " | " + nr)
+    setStones( p2_pits, p2_finish, p1_pits, stones, nr);
+}
+
+function setStones( row_1, finish ,row_2, stones, nr ){
+    //set to Array count
+    nr--;
+    row_1[nr] = 0; 
+
+    nr++; 
+
+    console.log("NR1: " +  nr)
+
+    while( stones > 0 ){
+
+        console.log("S1: " +  stones)
+
+        while( stones > 0 ){  
+            if( nr == 6 ){
+                break; 
+            }    
+            row_1[nr] = row_1[nr] + 1; 
+            
+            stones--; 
+            nr++;  
+
+            console.log("P1: " +  nr + " | " + stones )
+        }
+
+        console.log("Row1: " + row_1);
+
+        if( stones > 0 ){
+            finish[0] = finish[0] + 1;
+            stones--;
+
+            console.log("F: " +  finish + " | " + stones)
+        }
+        
+        console.log(finish)
+        
+        if( stones > 0 ){
+            nr = 0;
+            while( stones > 0 ){  
+                if( nr == 6 ){
+                    break; 
+                }       
+                row_2[nr] = row_2[nr] + 1; 
+                
+                stones--; 
+                nr++; 
+
+                console.log("P2: " +  nr + " | " + stones + " | " + row_2[nr])
+            }
+        }
+
+        console.log("Row1: " + row_2);
+
+    }
+
+    updateBoard(); 
+}
+
+
 
 /*=========================================================================================
                                         UPDATE
@@ -33,7 +125,7 @@ function updateBoard(){
     }
 
     //update P1 finish 
-    document.getElementById("finish-p1").innerText = p1_finish;
+    document.getElementById("finish-p1").innerText = p1_finish[0];
 
     //update P2 Pits 
     for(var i = 1; i <= 6; i++){
@@ -42,7 +134,7 @@ function updateBoard(){
     }
 
     //update P2 finish 
-    document.getElementById("finish-p2").innerText = p2_finish;
+    document.getElementById("finish-p2").innerText = p2_finish[0];
 }
 
 function updatePlayer(){
