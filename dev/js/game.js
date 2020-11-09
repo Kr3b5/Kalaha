@@ -30,15 +30,26 @@ function makeTurn(row, nr){
     var stones = document.getElementById(id).innerText
 
     // player 1 turn 
-    if( row == 1 ){
-        p1Turn(stones, nr); 
-    }
+    if( stones > 0 ){
+        if( row == 1 && p1_turn == true ){
+            p1Turn(stones, nr); 
 
-    // player 2 turn 
-    if( row == 2 ){
-        p2Turn(stones, nr);
-    }
+            //TODO Sonderregeln einbauen 
 
+            p1_turn = false;
+            updatePlayer();  
+        }
+
+        // player 2 turn 
+        if( row == 2 && p1_turn == false ){
+            p2Turn(stones, nr);
+
+            //TODO Sonderregeln einbauen 
+            
+            p1_turn = true; 
+            updatePlayer(); 
+        }
+    }
 
 }
 
@@ -55,7 +66,7 @@ function p2Turn(stones, nr){
 function setStones( row_1, finish ,row_2, stones, nr ){
     //set to Array count
     nr--;
-    
+
     row_1[nr] = 0; 
     nr++; 
 
