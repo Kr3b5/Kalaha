@@ -162,6 +162,7 @@ function newGame(){
 
     updateBoard(); 
 
-    //TODO update Player 
+    p1_turn = true; 
+    updatePlayer();  
 }
 
