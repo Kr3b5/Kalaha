@@ -55,41 +55,29 @@ function p2Turn(stones, nr){
 function setStones( row_1, finish ,row_2, stones, nr ){
     //set to Array count
     nr--;
+    
     row_1[nr] = 0; 
-
     nr++; 
 
-    console.log("============================================================================")
-    console.log("NR1: " +  nr)
-
     while( stones > 0 ){
-        console.log(" >>> Start WHILE ")
 
-        console.log("S1: " +  stones)
-
+        //row 1 - stones 
         while( stones > 0 ){  
             if( nr == 6 ){
                 break; 
             }    
-            row_1[nr] = row_1[nr] + 1; 
-            
+            row_1[nr] = row_1[nr] + 1;   
             stones--; 
             nr++;  
-
-            console.log("P1: " +  nr + " | " + stones )
         }
 
-        console.log("Row1: " + row_1);
-
+        //own finish stones 
         if( stones > 0 ){
             finish[0] = finish[0] + 1;
             stones--;
-
-            console.log("F: " +  finish + " | " + stones)
         }
         
-        console.log(finish)
-        
+        //row 2 - stones 
         if( stones > 0 ){
             nr = 0;
             while( stones > 0 ){  
@@ -97,19 +85,16 @@ function setStones( row_1, finish ,row_2, stones, nr ){
                     break; 
                 }       
                 row_2[nr] = row_2[nr] + 1; 
-                
                 stones--; 
                 nr++; 
-
-                console.log("P2: " +  nr + " | " + stones + " | " + row_2[nr])
             }
         }
 
-        console.log("Row1: " + row_2);
+        //reset nr for new row 
         nr = 0;
-
     }
 
+    //update board with array
     updateBoard(); 
 }
 
