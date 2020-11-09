@@ -8,6 +8,19 @@
  * @author Jonas Renz
  */
 
+/*
+    TODO
+
+
+    - Regel : 
+        -   Landet letzter Stein in Kalaha = neuer Zug 
+        -   Landet letzter Stein in leere eigene Mulde = Stein + Gegenseite werden in Kalaha getan  
+
+    - Spielende : wenn alle eigenen Mulden leer sind = gegnerische Reststeine gehen in eigenes Kalaha 
+
+
+*/
+
 /*=========================================================================================
                                         GLOBAL
 =========================================================================================*/
@@ -152,7 +165,6 @@ function updatePlayer(){
                                         NEW GAME 
 =========================================================================================*/
 
-/* KL*/
 function newGame(){
     p1_pits = [4,4,4,4,4,4];
     p2_pits = [4,4,4,4,4,4];
