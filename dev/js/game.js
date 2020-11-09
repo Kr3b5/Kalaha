@@ -59,9 +59,11 @@ function setStones( row_1, finish ,row_2, stones, nr ){
 
     nr++; 
 
+    console.log("============================================================================")
     console.log("NR1: " +  nr)
 
     while( stones > 0 ){
+        console.log(" >>> Start WHILE ")
 
         console.log("S1: " +  stones)
 
@@ -104,6 +106,7 @@ function setStones( row_1, finish ,row_2, stones, nr ){
         }
 
         console.log("Row1: " + row_2);
+        nr = 0;
 
     }
 
