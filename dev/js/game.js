@@ -16,9 +16,6 @@
         -   Landet letzter Stein in Kalaha = neuer Zug 
         -   Landet letzter Stein in leere eigene Mulde = Stein + Gegenseite werden in Kalaha getan  
 
-    - Spielende : wenn alle eigenen Mulden leer sind = gegnerische Reststeine gehen in eigenes Kalaha 
-
-
 */
 
 /*=========================================================================================
@@ -37,6 +34,7 @@ var end = false;
 
 const text_player = "An der Reihe: Spieler "; 
 const text_winner = "Gewonnen hat Spieler "; 
+const text_draw = "Unentschieden"; 
 
 /*=========================================================================================
                                         TURN
@@ -175,10 +173,10 @@ function updatePlayer(){
 function checkEnd(){
     if(p1_pits.every(item => item === 0)){
         movePits(p2_pits, p1_finish);        
-        endGame(1); 
+        endGame(); 
     }else if(p2_pits.every(item => item === 0)){
         movePits(p1_pits, p2_finish);
-        endGame(2);
+        endGame();
     }
 }
 
@@ -190,9 +188,17 @@ function movePits(row, finish){
     updateBoard(); 
 } 
 
-function endGame(winner){
+function endGame(){
     end = true;
-    document.getElementById("player").innerText = text_winner + winner;
+    
+    if( p1_finish > p2_finish ){
+        document.getElementById("player").innerText = text_winner + 1;
+    }else if( p1_finish < p2_finish ) {
+        document.getElementById("player").innerText = text_winner + 2;
+    }else{
+        document.getElementById("player").innerText = text_draw;
+    }
+    
 }
 
 /*=========================================================================================
