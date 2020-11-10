@@ -31,39 +31,50 @@ var p2_pits = [4,4,4,4,4,4];
 var p1_finish = [0];
 var p2_finish = [0];
 
-var p1_turn = true;  
+var p1_turn = true; 
 
+var end = false; 
+
+const text_player = "An der Reihe: Spieler "; 
+const text_winner = "Gewonnen hat Spieler "; 
 /*=========================================================================================
                                         TURN
 =========================================================================================*/
 
 function makeTurn(row, nr){
-    console.log("MAKE TURN " + row + " | " + nr)
-    var id = "pit-" + row + "-" + nr;
-    var stones = document.getElementById(id).innerText
 
-    // player 1 turn 
-    if( stones > 0 ){
-        if( row == 1 && p1_turn == true ){
-            p1Turn(stones, nr); 
+    console.log(end); 
 
-            //TODO Sonderregeln einbauen 
+    if( end == false ){
+        console.log("MAKE TURN " + row + " | " + nr)
+        var id = "pit-" + row + "-" + nr;
+        var stones = document.getElementById(id).innerText
 
-            p1_turn = false;
-            updatePlayer();  
-        }
+        // player 1 turn 
+        if( stones > 0 ){
+            if( row == 1 && p1_turn == true ){
+                p1Turn(stones, nr); 
 
-        // player 2 turn 
-        if( row == 2 && p1_turn == false ){
-            p2Turn(stones, nr);
+                //TODO Sonderregeln einbauen 
 
-            //TODO Sonderregeln einbauen 
-            
-            p1_turn = true; 
-            updatePlayer(); 
+                p1_turn = false;
+                updatePlayer();  
+            }
+
+            // player 2 turn 
+            if( row == 2 && p1_turn == false ){
+                p2Turn(stones, nr);
+
+                //TODO Sonderregeln einbauen 
+                
+                p1_turn = true; 
+                updatePlayer(); 
+            }
         }
     }
 
+    //check if game is finish
+    checkEnd();
 }
 
 function p1Turn(stones, nr){
@@ -152,13 +163,29 @@ function updateBoard(){
 function updatePlayer(){
     
     if( p1_turn == true ){
-        document.getElementById("player").innerText = 1;
+        document.getElementById("player").innerText = text_player + 1;
     }else{
-        document.getElementById("player").innerText = 2;
+        document.getElementById("player").innerText = text_player + 2;
     }
     
 }
 
+/*=========================================================================================
+                                        END
+=========================================================================================*/
+
+function checkEnd(){
+    if(p1_pits.every(item => item === 0)){
+        endGame(1); 
+    }else if(p2_pits.every(item => item === 0)){
+        endGame(2);
+    }
+}
+
+function endGame(winner){
+    end = true;
+    document.getElementById("player").innerText = text_winner + winner;
+}
 
 
 /*=========================================================================================
@@ -175,6 +202,8 @@ function newGame(){
     updateBoard(); 
 
     p1_turn = true; 
-    updatePlayer();  
+    updatePlayer(); 
+    
+    end = false; 
 }
 
