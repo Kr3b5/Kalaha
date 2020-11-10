@@ -37,6 +37,7 @@ var end = false;
 
 const text_player = "An der Reihe: Spieler "; 
 const text_winner = "Gewonnen hat Spieler "; 
+
 /*=========================================================================================
                                         TURN
 =========================================================================================*/
@@ -133,12 +134,9 @@ function setStones( row_1, finish ,row_2, stones, nr ){
     updateBoard(); 
 }
 
-
-
 /*=========================================================================================
                                         UPDATE
 =========================================================================================*/
-
 
 function updateBoard(){
     //update P1 pits 
@@ -176,17 +174,26 @@ function updatePlayer(){
 
 function checkEnd(){
     if(p1_pits.every(item => item === 0)){
+        movePits(p2_pits, p1_finish);        
         endGame(1); 
     }else if(p2_pits.every(item => item === 0)){
+        movePits(p1_pits, p2_finish);
         endGame(2);
     }
 }
+
+function movePits(row, finish){
+    for( var i = 0; i <= row.length-1; i++){
+        finish[0] = finish[0] + row[i];
+        row[i] = 0; 
+    }
+    updateBoard(); 
+} 
 
 function endGame(winner){
     end = true;
     document.getElementById("player").innerText = text_winner + winner;
 }
-
 
 /*=========================================================================================
                                         NEW GAME 
