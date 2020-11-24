@@ -11,9 +11,7 @@
 /*
     TODO
 
-
     - Regel : 
-        -   Landet letzter Stein in Kalaha = neuer Zug 
         -   Landet letzter Stein in leere eigene Mulde = Stein + Gegenseite werden in Kalaha getan  
 
 */
@@ -32,6 +30,10 @@ var p1_turn = true;
 
 var end = false; 
 
+// Rules
+var R_1 = false;
+var R_2 = false; 
+
 const text_player = "An der Reihe: Spieler "; 
 const text_winner = "Gewonnen hat Spieler "; 
 const text_draw = "Unentschieden"; 
@@ -42,7 +44,9 @@ const text_draw = "Unentschieden";
 
 function makeTurn(row, nr){
 
-    console.log(end); 
+    //set Rules false
+    R_1 = false; 
+    R_2 = false; 
 
     if( end == false ){
         console.log("MAKE TURN " + row + " | " + nr)
@@ -54,20 +58,15 @@ function makeTurn(row, nr){
             if( row == 1 && p1_turn == true ){
                 p1Turn(stones, nr); 
 
-                //TODO Sonderregeln einbauen 
-
-                p1_turn = false;
-                updatePlayer();  
+                //Check Rules 
+                checkRule(false); 
             }
 
             // player 2 turn 
             if( row == 2 && p1_turn == false ){
                 p2Turn(stones, nr);
 
-                //TODO Sonderregeln einbauen 
-                
-                p1_turn = true; 
-                updatePlayer(); 
+                checkRule(true); 
             }
         }
     }
@@ -94,7 +93,7 @@ function setStones( row_1, finish ,row_2, stones, nr ){
     nr++; 
 
     while( stones > 0 ){
-
+        
         //row 1 - stones 
         while( stones > 0 ){  
             if( nr == 6 ){
@@ -109,10 +108,12 @@ function setStones( row_1, finish ,row_2, stones, nr ){
         if( stones > 0 ){
             finish[0] = finish[0] + 1;
             stones--;
+            R_1 = true;  
         }
         
         //row 2 - stones 
         if( stones > 0 ){
+            R_1 = false; 
             nr = 0;
             while( stones > 0 ){  
                 if( nr == 6 ){
@@ -130,6 +131,15 @@ function setStones( row_1, finish ,row_2, stones, nr ){
 
     //update board with array
     updateBoard(); 
+}
+
+function checkRule(p1Turn){
+
+    //Rule 1 : Last stone in own Kalaha 
+    if( R_1 == false ){
+        p1_turn = p1Turn; 
+        updatePlayer(); 
+    }
 }
 
 /*=========================================================================================
@@ -160,10 +170,22 @@ function updatePlayer(){
     
     if( p1_turn == true ){
         document.getElementById("player").innerText = text_player + 1;
+        updateRow(1,2); 
     }else{
         document.getElementById("player").innerText = text_player + 2;
+        updateRow(2,1);
     }
     
+}
+
+//Mark active row 
+function updateRow(activeRow, disabledRow){
+    for(var i = 1; i <= 6; i++){
+        var activeID = "pit-" + activeRow + "-" + i;  
+        document.getElementById(activeID).setAttribute("style", "background-color: rgba(255, 255, 255, .05)"); 
+        var disabledID = "pit-" + disabledRow + "-" + i; 
+        document.getElementById(disabledID).setAttribute("style", "background-color: rgba(0, 0, 0, .1)"); 
+    }
 }
 
 /*=========================================================================================
@@ -212,11 +234,17 @@ function newGame(){
     p1_finish = [0];
     p2_finish = [0];
 
+    //update Board 
     updateBoard(); 
 
+    //set Player 1 row marked 
+    updateRow(1,2);
+
+    //set Player 1 for first turn 
     p1_turn = true; 
     updatePlayer(); 
     
+    //game not ended 
     end = false; 
 }
 
