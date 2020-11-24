@@ -5,8 +5,8 @@
 	<title>Kalaha</title>
 	<link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    
+<body onload=newGame()>
+	
     <ul>
         <li><h1>Kalaha</h1></li>
         <li style="float:right"><a onclick="newGame()">Neues Spiel</a></li>
@@ -42,8 +42,7 @@
         
 	</div>
 
-	<button onclick="updateBoard()">Test-updateBoard</button>
-	<button onclick="updatePlayer()">Test-updatePlayer</button>
+	<button onclick="updateRow(2)">Test</button>
 
     <script src="./js/game.js"></script>
 
