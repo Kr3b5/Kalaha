@@ -42,30 +42,38 @@ const text_draw = "Unentschieden";
                                         TURN
 =========================================================================================*/
 
+/**
+ * Make a turn
+ *
+ * @param {number} row The clicked row 
+ * @param {number} nr  The clicked pit nr 
+ */
 function makeTurn(row, nr){
 
     //set Rules false
     R_1 = false; 
     R_2 = false; 
 
+    //check if game is already ended 
     if( end == false ){
-        console.log("MAKE TURN " + row + " | " + nr)
+        console.log("Make Turn " + row + " | " + nr)
         var id = "pit-" + row + "-" + nr;
         var stones = document.getElementById(id).innerText
 
-        // player 1 turn 
+        //empty pit check 
         if( stones > 0 ){
+            // player 1 turn 
             if( row == 1 && p1_turn == true ){
-                p1Turn(stones, nr); 
+                setStones( p1_pits, p1_finish, p2_pits, stones, nr, 1, 2);
 
-                makeRule(false); 
+                //check if rule is triggerd after turn 
+                triggerRule(false); 
             }
 
             // player 2 turn 
             if( row == 2 && p1_turn == false ){
-                p2Turn(stones, nr);
-
-                makeRule(true); 
+                setStones( p2_pits, p2_finish, p1_pits, stones, nr, 2, 1);
+                triggerRule(true); 
             }
         }
     }
@@ -74,17 +82,18 @@ function makeTurn(row, nr){
     checkEnd();
 }
 
-function p1Turn(stones, nr){
-    console.log("P1 TURN " + stones + " | " + nr)
-    setStones( p1_pits, p1_finish, p2_pits, stones, nr, 1, 2);
-}
 
-function p2Turn(stones, nr){
-    console.log("P2 TURN " + stones + " | " + nr)
-    setStones( p2_pits, p2_finish, p1_pits, stones, nr, 2, 1);
-}
-
-function setStones( row_1, finish ,row_2, stones, nr, row_1_player){
+/**
+ * set stones to the pits  
+ *
+ * @param {Array} row_1        first row 
+ * @param {number} finish       own finish
+ * @param {Array} row_2        second row 
+ * @param {number} stones       number of stones  
+ * @param {number} nr           clicked pit nr 
+ * @param {number} a_Player active player 
+ */
+function setStones( row_1, finish ,row_2, stones, nr, a_Player){
     //set to Array count
     nr--;
 
@@ -100,7 +109,7 @@ function setStones( row_1, finish ,row_2, stones, nr, row_1_player){
             }    
 
             //check Rule 2 : last own Pit empty
-            checkRule2(row_1_player, nr, row_1[nr])
+            checkRule2(a_Player, nr, row_1[nr])
 
             row_1[nr] = row_1[nr] + 1;   
             stones--; 
@@ -136,14 +145,20 @@ function setStones( row_1, finish ,row_2, stones, nr, row_1_player){
     updateBoard(); 
 }
 
-function makeRule(p1Turn){
+/**
+ * Trigger the Rules 
+ *
+ * @param {boolean} p1Turn is player 1 active ? 
+ */
+function triggerRule(p1Turn){
 
-    //Rule 1 : Last stone in own Kalaha 
+    //Rule 1 : Last stone in own Kalaha = new turn 
     if( R_1 == false ){
         p1_turn = p1Turn; 
         updatePlayer(); 
     }
 
+    //Rule 2 : Last stone in own empty pit = get opposite stones 
     if( R_2 == true ){
         opPit = 5 - lastPit[1];
         if( lastPit[0] == 1 ){
@@ -159,6 +174,13 @@ function makeRule(p1Turn){
     }
 }
 
+/**
+ * Check Rule 2: Last stone in own empty pit = get opposite stones
+ *
+ * @param {number} row   active row 
+ * @param {number} id    active pit nr 
+ * @param {number} value value from pit  
+ */
 function checkRule2(row, id, value){
     if(value == 0){
         lastPit[0] = row; 
@@ -173,6 +195,9 @@ function checkRule2(row, id, value){
                                         UPDATE
 =========================================================================================*/
 
+/**
+ * Update the board
+ */
 function updateBoard(){
     //update P1 pits 
     for(var i = 1; i <= 6; i++){
@@ -193,6 +218,9 @@ function updateBoard(){
     document.getElementById("finish-p2").innerText = p2_finish[0];
 }
 
+/**
+ * Update the player text 
+ */
 function updatePlayer(){
     
     if( p1_turn == true ){
@@ -205,7 +233,9 @@ function updatePlayer(){
     
 }
 
-//Mark active row 
+/**
+ * Update active row 
+ */
 function updateRow(activeRow, disabledRow){
     for(var i = 1; i <= 6; i++){
         var activeID = "pit-" + activeRow + "-" + i;  
@@ -219,6 +249,9 @@ function updateRow(activeRow, disabledRow){
                                         END
 =========================================================================================*/
 
+/**
+ * Check if every pits from a player are empty -> end game  
+ */
 function checkEnd(){
     if(p1_pits.every(item => item === 0)){
         movePits(p2_pits, p1_finish);        
@@ -229,6 +262,9 @@ function checkEnd(){
     }
 }
 
+/**
+ * Move all stones to winners kalaha if game endend    
+ */
 function movePits(row, finish){
     for( var i = 0; i <= row.length-1; i++){
         finish[0] = finish[0] + row[i];
@@ -237,6 +273,9 @@ function movePits(row, finish){
     updateBoard(); 
 } 
 
+/**
+ * Write winner to label     
+ */
 function endGame(){
     end = true;
     
@@ -254,6 +293,9 @@ function endGame(){
                                         NEW GAME 
 =========================================================================================*/
 
+/**
+ * Start a new game      
+ */
 function newGame(){
     p1_pits = [4,4,4,4,4,4];
     p2_pits = [4,4,4,4,4,4];
