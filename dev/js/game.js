@@ -11,9 +11,6 @@
 /*
     TODO
 
-    - Regel : 
-        -   Landet letzter Stein in leere eigene Mulde = Stein + Gegenseite werden in Kalaha getan  
-
 */
 
 /*=========================================================================================
@@ -33,6 +30,9 @@ var end = false;
 // Rules
 var R_1 = false;
 var R_2 = false; 
+
+//last Pit for Rule 2 [row, id]
+var lastPit = [0,0];
 
 const text_player = "An der Reihe: Spieler "; 
 const text_winner = "Gewonnen hat Spieler "; 
@@ -58,15 +58,14 @@ function makeTurn(row, nr){
             if( row == 1 && p1_turn == true ){
                 p1Turn(stones, nr); 
 
-                //Check Rules 
-                checkRule(false); 
+                makeRule(false); 
             }
 
             // player 2 turn 
             if( row == 2 && p1_turn == false ){
                 p2Turn(stones, nr);
 
-                checkRule(true); 
+                makeRule(true); 
             }
         }
     }
@@ -77,15 +76,15 @@ function makeTurn(row, nr){
 
 function p1Turn(stones, nr){
     console.log("P1 TURN " + stones + " | " + nr)
-    setStones( p1_pits, p1_finish, p2_pits, stones, nr);
+    setStones( p1_pits, p1_finish, p2_pits, stones, nr, 1, 2);
 }
 
 function p2Turn(stones, nr){
-    console.log("P1 TURN " + stones + " | " + nr)
-    setStones( p2_pits, p2_finish, p1_pits, stones, nr);
+    console.log("P2 TURN " + stones + " | " + nr)
+    setStones( p2_pits, p2_finish, p1_pits, stones, nr, 2, 1);
 }
 
-function setStones( row_1, finish ,row_2, stones, nr ){
+function setStones( row_1, finish ,row_2, stones, nr, row_1_player){
     //set to Array count
     nr--;
 
@@ -99,6 +98,10 @@ function setStones( row_1, finish ,row_2, stones, nr ){
             if( nr == 6 ){
                 break; 
             }    
+
+            //check Rule 2 : last own Pit empty
+            checkRule2(row_1_player, nr, row_1[nr])
+
             row_1[nr] = row_1[nr] + 1;   
             stones--; 
             nr++;  
@@ -133,12 +136,36 @@ function setStones( row_1, finish ,row_2, stones, nr ){
     updateBoard(); 
 }
 
-function checkRule(p1Turn){
+function makeRule(p1Turn){
 
     //Rule 1 : Last stone in own Kalaha 
     if( R_1 == false ){
         p1_turn = p1Turn; 
         updatePlayer(); 
+    }
+
+    if( R_2 == true ){
+        opPit = 5 - lastPit[1];
+        if( lastPit[0] == 1 ){
+            p1_pits[lastPit[1]] = p2_pits[opPit] + 1;
+            p2_pits[opPit] = 0; 
+        }else if( lastPit[0] == 2 ){
+            p2_pits[lastPit[1]] = p1_pits[opPit] + 1;
+            p1_pits[opPit] = 0; 
+        }else{
+            console.log("Error - Wrong Row")
+        }
+        updateBoard(); 
+    }
+}
+
+function checkRule2(row, id, value){
+    if(value == 0){
+        lastPit[0] = row; 
+        lastPit[1] = id; 
+        R_2 = true; 
+    }else{
+        R_2 = false;
     }
 }
 
