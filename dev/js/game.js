@@ -239,7 +239,7 @@ function updatePlayer(){
 function updateRow(activeRow, disabledRow){
     for(var i = 1; i <= 6; i++){
         var activeID = "pit-" + activeRow + "-" + i;  
-        document.getElementById(activeID).setAttribute("style", "background-color: rgba(255, 255, 255, .05)"); 
+        document.getElementById(activeID).setAttribute("style", "background-color: rgb(255, 255, 255, .3)"); 
         var disabledID = "pit-" + disabledRow + "-" + i; 
         document.getElementById(disabledID).setAttribute("style", "background-color: rgba(0, 0, 0, .1)"); 
     }

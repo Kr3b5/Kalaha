@@ -66,7 +66,7 @@ html {
 body {
 	min-height: 100%;
 	text-align: center;
-	background: radial-gradient(circle, grey 15%, #595959);
+	background: radial-gradient(circle, lightgrey 15%, grey);
 	background-size: cover;
 	font-family: Roboto Slab, sans-serif;
 }
@@ -88,7 +88,7 @@ body {
 	flex-flow: row;
 	width: 1000px;
 	height: 280px;
-	background-color: rgba(139,69,19, .05);
+	background-color: rgba(139,69,19, .1);
 	border-color: #333333;
 	border-width: 1px;
 	border-style: solid;
