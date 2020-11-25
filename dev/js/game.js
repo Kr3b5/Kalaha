@@ -317,3 +317,25 @@ function newGame(){
     end = false; 
 }
 
+/*=========================================================================================
+                                        MODAL 
+=========================================================================================*/
+var modal = document.getElementById("infoModal");
+var span = document.getElementsByClassName("close")[0];
+
+// open modal
+function openModal(){
+    modal.style.display = "block";
+}
+
+// close the modal (button)
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+//close modal (outside click)
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}

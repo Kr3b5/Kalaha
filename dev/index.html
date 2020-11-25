@@ -8,8 +8,9 @@
 <body onload=newGame()>
 
     <ul>
-        <li><h1>Kalaha</h1></li>
-        <li style="float:right"><a onclick="newGame()">Neues Spiel</a></li>
+		<li><h1>Kalaha</h1></li>
+		<li style="float:right"><a onclick="newGame()">Neues Spiel</a></li>
+		<li style="float:right"><a onclick="openModal()">Wie wird gespielt?</a></li>
     </ul>
     
 	<p class="active-player" id="player">An der Reihe: Spieler 1</p>
@@ -40,6 +41,32 @@
 
         <div class="finish" id="finish-p1"><p>0</p></div>
         
+	</div>
+
+	<!-- Info Modal -->
+	<div id="infoModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h2>So wird gespielt</h2>
+			<p>
+				Wer beginnt, leert eine beliebige Mulde auf seine Seite und legt je einen Stein in die folgenden Mulden, sowie seine eigene Kalaha. <br>
+				Es geht gegen den Uhrzeigersinn und die Kalaha des Gegners lässt man aus.
+				<br><br>
+				Fällt der letzte Spielstein in die eigene Kalaha darfst man einen weiteren Zug machen. <br>
+				Es gibt so viele Bonus-Züge, wie oft sich der Vorgang, dass der letzte Stein in der eigenen Kalaha landet, wiederholt.
+				<br><br>
+				Während des Spiels entstehen leere Mulden. 
+				Landet ein letzter Stein in der eigenen leeren Mulde, dann darf man sich diesen Stein und die Steine in der gegenüberliegenden Mulde, 
+				also die des Gegners in die eigene Kalaha nehmen. <br>
+				So wird der Zug beendet und der Gegenspieler kann sein Glück versuchen.
+			</p>	
+			<h2>Ende des Spiels</h2>
+			<p>
+				Wer von euch es geschafft hat, die eigenen Mulden zuerst zu leeren, kann sich die Steine des Gegners in dessen Mulden verblieben nehmen. <br> 
+				Diese kommen in die eigene Kalaha und dann geht es ans Zählen der Steinchen. <br>
+				Gewinner ist, wer die meisten Steine in seiner Kalaha gesammelt hat.
+			</p>
+		</div>
 	</div>
 
     <script src="./js/game.js"></script>
