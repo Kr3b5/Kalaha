@@ -121,6 +121,7 @@ function setStones( row_1, finish ,row_2, stones, nr, a_Player){
             finish[0] = finish[0] + 1;
             stones--;
             R_1 = true;  
+            R_2 = false; 
         }
         
         //row 2 - stones 
