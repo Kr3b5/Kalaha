@@ -151,14 +151,15 @@ body {
 	margin: auto;
 	padding: 20px;
 	border: 1px solid #888;
-	width: 80%;
+	border-radius: 20px;
+	width: 60%;
 }
 
 /* The Close Button */
 .close {
 	color: #aaaaaa;
 	float: right;
-	font-size: 28px;
+	font-size: 50px;
 	font-weight: bold;
 }
 
