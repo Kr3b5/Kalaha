@@ -8,7 +8,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]]
+![Product Name Screen Shot][product-screenshot]
 
 A board game [Kalaha](https://en.wikipedia.org/wiki/Kalah) written as a small university project for the course web-development  
 
